@@ -3,27 +3,28 @@ import firebase from '../../firebase';
 
 export const fetchUsers = () => {
     return (dispatch) => {
-        firebase.child('users').on('value' ,
+        firebase.ref().child('users').on('value' ,
             snapshot => {
                 if(snapshot.val()!==null){
+                    const data = [];
                     snapshot.forEach((childSnapshot) => {
                         var childKey = childSnapshot.key;
                         var users = childSnapshot.val();
-                        console.log(users);
-                        dispatch(fetchUsersSuccess(users))
+                        data.push(users);
                     });
+                    dispatch(fetchUsersSuccess(data))
                 }
             }
-            );
+        );
 
     }
 }
 
   
-  export const fetchUsersSuccess = users => {
+  export const fetchUsersSuccess = (payload) => {
     return {
       type: Constants.FETCH_USERS_SUCCESS,
-      payload: users
+      payload: payload
     }
   }
 
@@ -52,26 +53,4 @@ export const deleteUser = (payload) =>  {
 }
 
 
-export const addreminder = (payload) =>  {
-    return {
-        type:Constants.ADD_REMINDER,
-        payload:payload
-    }
-}
-
-
-export const updatereminder = (payload) =>  {
-    return {
-        type:Constants.UPDATE_REMINDER,
-        payload:payload
-    }
-}
-
-
-export const deletereminder = (payload) =>  {
-    return {
-        type:Constants.DELETE_REMINDER,
-        payload:payload
-    }
-}
 

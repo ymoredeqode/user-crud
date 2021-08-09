@@ -2,22 +2,26 @@ import React ,{ useEffect, useState } from 'react';
 import {useSelector, useDispatch, connect} from 'react-redux';
 import { Link } from "react-router-dom";
 import {deleteUser,fetchUsers} from '../Redux/Actions';
+import firebase from '../firebase';
 
 const Index = (props) => {
     const {setEdit} = props;
-
     const [initUsers, setInitUsers] = useState([]);
-    console.log(initUsers.length);
-
-    
-    // let initUsers = useSelector((state) => state.formReducer);
+    let initData = useSelector((state) => state.formReducer);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchUsers());
+    }, []);
+
+    useEffect(() => {
+        setInitUsers(initData)
+    }, [initData]);
+
     const deletedata = (val) =>{
+        firebase.ref('users/' + val).remove()
         dispatch(deleteUser(val))
     }
-    useEffect(() => {
-        setInitUsers(dispatch(fetchUsers()));
-    }, []);
 
     return (
         <>
@@ -30,6 +34,7 @@ const Index = (props) => {
                 <thead className="thead-dark">
                     <tr>
                         <th>No</th>
+                        <th>Id</th>
                         <th>Image</th>
                         <th>Name</th>
                         <th>Email</th>
@@ -41,15 +46,15 @@ const Index = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-
-
                 {
+                    // initUsers !== undefined 
                     initUsers.length > 0 
                     
                     ? 
                 
                     initUsers.map((item,index)=>(
                         <tr key={index}>
+                            <td>{index + 1}</td>
                             <td>{item.id}</td>
                             <td><img src={item.image} alt="deqode" className="App-logo"/></td>
                             <td>{item.name}</td>

@@ -17,7 +17,7 @@ const contactReducer = (state = initialState, action) => {
     switch(action.type){
 
         case Constants.FETCH_USERS_SUCCESS : 
-        state = [... state, action.payload];
+        state = action.payload;
         return state;
 
         case Constants.ADD_USER : 

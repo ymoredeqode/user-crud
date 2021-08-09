@@ -9,10 +9,8 @@ import {
 
 import Userform from './Userdetails/userform';
 import Userlist from './Userdetails';
-import Reminderlist from './Reminder';
 import Home from './Home';
 import Jumbotron from './Components/jumbotron';
-import Reminderform from './Reminder/reminderform';
 
 
 function App() {
@@ -42,16 +40,6 @@ function App() {
             <div className="dropdown-menu" aria-labelledby="dropdown01">
               <Link className="dropdown-item" to="/userlist">Users</Link>
               <Link className="dropdown-item" to="/userform">Add Users</Link>
-            </div>
-          </li>
-
-          <li className="nav-item dropdown">
-            <a className="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Reminders</a>
-            <div className="dropdown-menu" aria-labelledby="dropdown01">
-              <Link className="dropdown-item" to="/add-reminder">Add Reminder</Link>
-              <Link className="dropdown-item" to="/reminders">All</Link>
-              <Link className="dropdown-item" to="/upcoming-reminders">Upcoming</Link>
-              <Link className="dropdown-item" to="/past-reminders">Past</Link>
             </div>
           </li>
         </ul>
@@ -85,43 +73,6 @@ function App() {
             <Jumbotron  title="User List" desc="" />
             <div className="container">
               <Userlist setEdit={setEdit}/>
-            </div>
-          </Route>
-
-          <Route exact path="/reminders">
-            <Jumbotron  title="Reminders List" desc="" />
-            <div className="container">
-              <Reminderlist type="all"  setEdit={setEdit} />
-            </div>
-          </Route>
-
-          <Route exact path="/upcoming-reminders">
-            <Jumbotron  title="Upcoming Reminders List" desc="" />
-            <div className="container">
-              <Reminderlist type="upcoming" setEdit={setEdit} />
-            </div>
-          </Route>
-
-          <Route exact path="/past-reminders">
-            <Jumbotron  title="Past Reminders List" desc="" />
-            <div className="container">
-              <Reminderlist type="past" setEdit={setEdit}/>
-            </div>
-          </Route>
-
-
-          <Route exact path="/add-reminder">
-            <Jumbotron  title="Add New Reminder" desc="" />
-            <div className="container">
-              <Reminderform isEdit={isEdit} setEdit={setEdit}/>
-            </div>
-          </Route>
-
-
-          <Route exact path="/edit-reminder/:id">
-            <Jumbotron  title="Edit Reminder" desc="" />
-            <div className="container">
-              <Reminderform isEdit={isEdit} setEdit={setEdit} />
             </div>
           </Route>
 

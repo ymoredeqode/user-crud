@@ -16,13 +16,14 @@ const Userform = (props) => {
     const history = useHistory();
     const params = useParams();
     if(params.id !== undefined){ 
-        const currentUser = userdata.find(item => parseInt(item.id) === parseInt(params.id));
+        const currentUser = userdata.find(item => item.id === params.id);
         userdata = currentUser;
     }
 
     const educations = Constants.educations;
     const gender = Constants.gender;
-    const [id, setID] = useState(Math.floor(Math.random() * 1000000000000));
+    const [id, setID] = useState(firebase.ref().child('users').push().key);
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [image, setImage] = useState('');
@@ -44,7 +45,7 @@ const Userform = (props) => {
         setUsergender('');
         setPassword('');
         setCpassword('');
-        setID(Math.floor(Math.random() * 1000000000000));
+        setID(firebase.ref().child('users').push().key);
     }
     
     const getPassword = (e) =>{
@@ -56,7 +57,12 @@ const Userform = (props) => {
     }
 
     const getImage = (e) =>{
-        setImage(URL.createObjectURL(e.target.files[0]))
+        var file = e.target.files[0];
+        var reader = new FileReader();
+        reader.onloadend = function() {
+            setImage(reader.result)
+        }
+        reader.readAsDataURL(file);
     }
 
     useEffect(() => {
@@ -73,21 +79,22 @@ const Userform = (props) => {
             }
             if(params.id === undefined){
                 dispatch(addUser(obj));
-
-                firebase.child('users').push(obj ,
-
-                                            err => {
-
-                                                if(err){
-                                                    console.log(err);
-                                                }
-                                            }
-                                                
-                                            
-                                            );
-
+                firebase.ref('users/' + obj.id).set(obj ,
+                    err => {
+                        if(err){
+                            console.log(err);
+                        }
+                    }
+                );
             }else{
                 dispatch(updateUser(obj));
+                firebase.ref('users/' + obj.id).set(obj ,
+                    err => {
+                        if(err){
+                            console.log(err);
+                        }
+                    }
+                );
             }
             setFlag(true);
             setEdit(false);
@@ -131,7 +138,6 @@ const Userform = (props) => {
             }
             if(key === 'email' && value !== ''){
                 if(value.match("^[a-zA-Z0-9]+@[a-zA-Z0-9-]+\.[a-zA-Z]+$") === null){
-                    console.log(value.match("^[a-zA-Z0-9]+@[a-zA-Z0-9-]+\.[a-zA-Z]+$"),'sssssss');
                     setErrormsg(errorMsg =>[...errorMsg,'Email Is invalid']);
                     setProceedflag(false);
                 }
