@@ -7,8 +7,8 @@ const Jumbotron = (props) =>{
         <Fragment>
             <div className="jumbotron">
                 <div className="container">
-                    {title !== ''? <h4 className="display-4">{title}</h4> : ''}
-                    {desc !== ''? <p>{desc}</p> : ''}
+                    {title && <h4 className="display-4">{title}</h4>}
+                    {desc && <p>{desc}</p>}
                 </div>
             </div>
         </Fragment>

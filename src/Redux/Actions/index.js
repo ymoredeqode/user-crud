@@ -1,4 +1,4 @@
-import * as Constants  from '../../Constants.js';
+import * as Constants  from '../../Constants/ActionKeys.js';
 import firebase from '../../firebase';
 
 export const fetchUsers = () => {
@@ -12,14 +12,12 @@ export const fetchUsers = () => {
                         var users = childSnapshot.val();
                         data.push(users);
                     });
-                    dispatch(fetchUsersSuccess(data))
+                    dispatch(fetchUsersSuccess(data));
                 }
             }
         );
-
     }
 }
-
   
   export const fetchUsersSuccess = (payload) => {
     return {

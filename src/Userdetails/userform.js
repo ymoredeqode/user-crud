@@ -1,17 +1,21 @@
 import React , {useState, useEffect, Fragment} from 'react';
-import * as Constants from '../Constants.js';
+import * as GenderConstant from '../Constants/Gender.js';
+import * as EducationsConstant from '../Constants/Educations.js';
+import * as Constants from '../Constants/ActionKeys.js';
 import Alert from '../Components/alert';
 import {useSelector, useDispatch} from 'react-redux';
 import {addUser, updateUser} from '../Redux/Actions';
 import {useHistory, useParams } from "react-router-dom";
 import firebase from '../firebase';
 
-
 const Userform = (props) => {
 
     const {isEdit,setEdit} = props;
 
     let userdata = useSelector(state => state.formReducer);
+
+    console.log(userdata);
+
     const dispatch = useDispatch();
     const history = useHistory();
     const params = useParams();
@@ -20,8 +24,8 @@ const Userform = (props) => {
         userdata = currentUser;
     }
 
-    const educations = Constants.educations;
-    const gender = Constants.gender;
+    const educations = EducationsConstant.educations;
+    const gender = GenderConstant.gender;
     const [id, setID] = useState(firebase.ref().child('users').push().key);
 
     const [name, setName] = useState('');
@@ -106,7 +110,7 @@ const Userform = (props) => {
         }else{
             setTimeout(()=>{
                 setFlag(false);
-            },5000)
+            },3000)
         }
     },[proceedflag]);
 

@@ -1,17 +1,8 @@
-import * as Constants  from '../../Constants.js';
+import * as Constants  from '../../Constants/ActionKeys.js';
 
-const initialState = [
-    // {
-    //     id:125528550,
-    //     name:"Yashwant More",
-    //     email:"yashwantmore77@gmail.com",
-    //     dob:"1970-08-07",
-    //     usergender:"other",
-    //     education:"MCA",
-    //     password:"123456789",
-    //     image:"https://picsum.photos/200"
-    // }
-]
+// const initialState = [];
+const initialState = {};
+
 
 const contactReducer = (state = initialState, action) => {
     switch(action.type){
